@@ -11,23 +11,23 @@ def greedy(goal_weight):
     >> from plate_math import greedy
     >> bar_weight = 45
     >> goal_weight = 285
-    >> (plates, num_plates) = greedy(goal_weight - bar_weight)
+    >> plates = greedy(goal_weight - bar_weight)
     """
 
     # Init the number of plates
-    num_plates = [0 for p in plates]
+    num_plates = {plate : 0 for plate in plates}
 
-    # Not the most useful of closures, but it avoids passing an array, and
-    # is thread-safe (Closures are neat!)
-    def do_greedy(goal_weight):
-        v = sum([p*n for (p,n) in zip(plates, num_plates)])
-        if v < goal_weight:
-            for pli in range(len(plates)):
-                if v + 2*plates[pli] <= goal_weight:
-                    num_plates[pli]+=2;
-                    do_greedy(goal_weight)
-                    break;
+    if goal_weight < 0:
+        return num_plates;
 
-    do_greedy(goal_weight)
-    return (plates, num_plates)
+    def total_weight():
+        return sum([p*n for (p,n) in num_plates.iteritems()])
+
+    def add_plates(plate):
+        num_plates[plate] = 2 * ((goal_weight - total_weight()) // (2 * plate))
+
+    for plate in plates:
+        add_plates(plate)
+        
+    return num_plates
 
