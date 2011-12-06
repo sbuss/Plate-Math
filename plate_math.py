@@ -15,7 +15,7 @@ def greedy(goal_weight):
     """
 
     # Init the number of plates
-    num_plates = {plate : 0 for plate in plates}
+    num_plates = dict((plate, 0) for plate in plates)
 
     if goal_weight < 0:
         return num_plates;
