@@ -1,3 +1,5 @@
+plates = [45, 35, 25, 10, 5, 2.5]
+
 def greedy(goal_weight):
     """ Greedy knapsack solution.
 
@@ -12,12 +14,13 @@ def greedy(goal_weight):
     >> (plates, num_plates) = greedy(goal_weight - bar_weight)
     """
 
-    plates = [45, 35, 25, 10, 5, 2.5]
-    num_plates = [0, 0, 0, 0, 0, 0]
+    # Init the number of plates
+    num_plates = [0 for p in plates]
 
-    # Closures are neat!
+    # Not the most useful of closures, but it avoids passing an array, and
+    # is thread-safe (Closures are neat!)
     def do_greedy(goal_weight):
-        v = sum([a*b for (a,b) in zip(plates, num_plates)])
+        v = sum([p*n for (p,n) in zip(plates, num_plates)])
         if v < goal_weight:
             for pli in range(len(plates)):
                 if v + 2*plates[pli] <= goal_weight:
