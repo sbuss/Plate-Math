@@ -1,5 +1,6 @@
 plates = [45, 35, 25, 10, 5, 2.5]
 
+
 def greedy(goal_weight):
     """ Greedy knapsack solution.
 
@@ -18,16 +19,15 @@ def greedy(goal_weight):
     num_plates = dict((plate, 0) for plate in plates)
 
     if goal_weight < 0:
-        return num_plates;
+        return num_plates
 
     def total_weight():
-        return sum([p*n for (p,n) in num_plates.iteritems()])
+        return sum([p * n for (p, n) in num_plates.iteritems()])
 
     def add_plates(plate):
         num_plates[plate] = 2 * ((goal_weight - total_weight()) // (2 * plate))
 
     for plate in plates:
         add_plates(plate)
-        
-    return num_plates
 
+    return num_plates
